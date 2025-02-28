@@ -34,17 +34,17 @@ window.onload = () => {
             const input = document.getElementById(id);
             input.addEventListener('blur', () => {
                 formatCurrency(input);
-                if (id === 'paycheck1' || id === 'paycheck2') updateIncome();
-                if (id === 'invested1' || id === 'invested2') updateInvesting();
-                if (id === 'savings1' || id === 'savings2') updateSavings();
+                if (id === 'paycheck1' || id === 'paycheck2') { updateIncome(); saveMonthData(); }
+                if (id === 'invested1' || id === 'invested2') { updateInvesting(); saveMonthData(); }
+                if (id === 'savings1' || id === 'savings2') { updateSavings(); saveMonthData(); }
                 updateSummaries();
             });
             input.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter' && id !== 'billAmount' && id !== 'expenseAmount') {
                     formatCurrency(input);
-                    if (id === 'paycheck1' || id === 'paycheck2') updateIncome();
-                    if (id === 'invested1' || id === 'invested2') updateInvesting();
-                    if (id === 'savings1' || id === 'savings2') updateSavings();
+                    if (id === 'paycheck1' || id === 'paycheck2') { updateIncome(); saveMonthData(); }
+                    if (id === 'invested1' || id === 'invested2') { updateInvesting(); saveMonthData(); }
+                    if (id === 'savings1' || id === 'savings2') { updateSavings(); saveMonthData(); }
                     updateSummaries();
                 } else if (e.key === 'Enter' && id === 'expenseAmount') {
                     addQuickExpense();
@@ -59,12 +59,12 @@ window.onload = () => {
         document.getElementById('yearButton').addEventListener('click', showYearOptions);
         document.getElementById('monthButton').addEventListener('click', showMonthOptions);
         document.getElementById('importBillsButton').addEventListener('click', showImportBillsPopup);
-        document.getElementById('paycheck1').addEventListener('change', () => { updateIncome(); updateSummaries(); });
-        document.getElementById('paycheck2').addEventListener('change', () => { updateIncome(); updateSummaries(); });
-        document.getElementById('invested1').addEventListener('change', () => { updateInvesting(); updateSummaries(); });
-        document.getElementById('invested2').addEventListener('change', () => { updateInvesting(); updateSummaries(); });
-        document.getElementById('savings1').addEventListener('change', () => { updateSavings(); updateSummaries(); });
-        document.getElementById('savings2').addEventListener('change', () => { updateSavings(); updateSummaries(); });
+        document.getElementById('paycheck1').addEventListener('change', () => { updateIncome(); saveMonthData(); updateSummaries(); });
+        document.getElementById('paycheck2').addEventListener('change', () => { updateIncome(); saveMonthData(); updateSummaries(); });
+        document.getElementById('invested1').addEventListener('change', () => { updateInvesting(); saveMonthData(); updateSummaries(); });
+        document.getElementById('invested2').addEventListener('change', () => { updateInvesting(); saveMonthData(); updateSummaries(); });
+        document.getElementById('savings1').addEventListener('change', () => { updateSavings(); saveMonthData(); updateSummaries(); });
+        document.getElementById('savings2').addEventListener('change', () => { updateSavings(); saveMonthData(); updateSummaries(); });
     } catch (error) {
         console.error('Error on page load:', error);
         alert('An error occurred while loading the app. Please try refreshing the page.');
@@ -257,7 +257,7 @@ function toggleYTDSummary() {
 function updateYTDSummary(year) {
     try {
         let ytdIncome = 0, ytdInvested = 0, ytdSaved = 0;
-        const maxMonth = (year == now.getFullYear()) ? now.getMonth() + 1 : 12;
+        const maxMonth = (year == now.getFullYear()) ? now.getMonth() + 1 : 12; // Current year up to present month, others all 12
         for (let month = 1; month <= maxMonth; month++) {
             const monthKey = `${year}-${String(month).padStart(2, '0')}`;
             const monthIncomes = JSON.parse(localStorage.getItem(monthKey + '_incomes')) || { paycheck1: 0, paycheck2: 0 };
@@ -296,7 +296,7 @@ function saveMonthData() {
     localStorage.setItem(monthKey + '_investments', JSON.stringify(investments));
     localStorage.setItem(monthKey + '_savings', JSON.stringify(savings));
     updateYTDSummary(document.getElementById('selectedYear').textContent);
-    alert('Data saved for the selected month and year, and YTD summary updated for all 12 months!');
+    // Removed alert to avoid popup on every input change
 }
 
 // Clear all data for the selected month and year
@@ -444,6 +444,7 @@ function addQuickExpense() {
         localStorage.setItem(getMonthYearKey() + '_expenses', JSON.stringify(expenses));
         renderExpenses();
         updateSummaries();
+        saveMonthData(); // Save all data after adding expense
         hideQuickExpensePopup();
     } else {
         alert('Please enter a valid expense name and amount.');
@@ -469,6 +470,7 @@ function renderExpenses() {
             localStorage.setItem(getMonthYearKey() + '_expenses', JSON.stringify(expenses));
             renderExpenses();
             updateSummaries();
+            saveMonthData(); // Save after deletion
         };
         li.appendChild(expenseText);
         li.appendChild(deleteBtn);
@@ -598,6 +600,7 @@ function importPreviousMonthBills(importMonth, importYear) {
         localStorage.setItem(getMonthYearKey(), JSON.stringify(bills));
         renderBills();
         updateSummaries();
+        saveMonthData(); // Save after importing bills
         alert(`Imported ${importedBills.length} bill(s) from ${importMonth} ${importYear}. You can delete any bill if needed.`);
     } else {
         alert(`No new bills to import from ${importMonth} ${importYear}.`);
@@ -612,6 +615,7 @@ function removeBillByName(billName) {
         localStorage.setItem(getMonthYearKey(), JSON.stringify(bills));
         renderBills();
         updateSummaries();
+        saveMonthData(); // Save after removing bill
         alert(`Bill "${billName}" removed from the current month's budget.`);
     } else {
         alert(`Bill "${billName}" not found in the current month's budget.`);
