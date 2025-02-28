@@ -19,6 +19,9 @@ window.onload = () => {
             console.error('Selected year or month span not found');
         }
 
+        // Load data for the current month/year
+        loadMonthData();
+
         populateYearOptions();
         populateMonthOptions();
         renderBills();
@@ -26,7 +29,6 @@ window.onload = () => {
         updateIncome();
         updateInvesting();
         updateSavings();
-        loadMonthData();
         updateSummaries();
 
         // Add event listeners for inputs
@@ -102,7 +104,7 @@ function populateYearOptions() {
         li.onclick = () => {
             document.getElementById('selectedYear').textContent = year;
             document.getElementById('yearOptions').style.display = 'none';
-            loadMonthData();
+            loadMonthData(); // Load data for the new year
             console.log('Year selected:', year);
         };
         yearList.appendChild(li);
@@ -125,7 +127,7 @@ function populateMonthOptions() {
         li.onclick = () => {
             document.getElementById('selectedMonth').textContent = month;
             document.getElementById('monthOptions').style.display = 'none';
-            loadMonthData();
+            loadMonthData(); // Load data for the new month
             console.log('Month selected:', month);
         };
         monthList.appendChild(li);
@@ -208,7 +210,7 @@ document.addEventListener('click', (event) => {
 // Load monthly data
 function loadMonthData() {
     try {
-        const monthKey = getMonthYearKey();
+        const monthKey = getMonthYearKey(); // Use selected month/year from UI
         bills = JSON.parse(localStorage.getItem(monthKey)) || [];
         expenses = JSON.parse(localStorage.getItem(monthKey + '_expenses')) || [];
         incomes = JSON.parse(localStorage.getItem(monthKey + '_incomes')) || { paycheck1: 0, paycheck2: 0 };
@@ -409,6 +411,7 @@ function renderBills() {
             localStorage.setItem(getMonthYearKey(), JSON.stringify(bills));
             renderBills();
             updateSummaries();
+            saveMonthData(); // Save after deletion
         };
         li.appendChild(billText);
         li.appendChild(deleteBtn);
