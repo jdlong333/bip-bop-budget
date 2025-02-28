@@ -9,7 +9,7 @@ body {
     font-family: 'Inter', 'Roboto', sans-serif; /* Clean, modern sans-serif for body */
     background-color: #404040; /* Warm gray for a calming, approachable base */
     background-image: linear-gradient(135deg, #404040 0%, #2E8B57 100%), /* Gradient from warm gray to emerald green */
-                      url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjQwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjYwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSI4MCIgY3k9IjgwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjgwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSI4MCIgY3k9IjIwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48L3N2Zz4='); /* Subtle dot pattern in light gray */
+                      url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjQwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjYwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSI4MCIgY3k9IjgwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjgwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSI4MCIgY3k9IjIwIiByPSIyIiBmaWxlPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48L3N2Zz4='); /* Subtle dot pattern in light gray */
     background-size: 100% 100%, 50px 50px; /* Full gradient, smaller dots for subtlety */
     background-position: 0 0, 0 0; /* Position both backgrounds */
     background-repeat: no-repeat, repeat; /* Gradient doesn’t repeat, dots repeat */
@@ -187,14 +187,13 @@ input::placeholder, select::placeholder {
     font-style: italic; /* Subtle italic for placeholders to entice input */
 }
 
-/* Income Section Specific Styling */
-.income-section .input-group {
-    justify-content: space-between; /* Evenly space label and input */
-}
-
-.income-section input {
-    width: 180px; /* Slightly wider for better usability */
-    max-width: 180px;
+/* Income, Investments, and Savings Section Styling */
+.income-section .input-group input,
+.investing-section .input-group input,
+.savings-section .input-group input {
+    width: 100%; /* Full width without labels */
+    max-width: none; /* Remove previous max-width constraint */
+    margin: 0 auto; /* Center the input */
 }
 
 /* Button Styling */
@@ -336,10 +335,6 @@ button:hover {
 .half-section .input-group {
     justify-content: center; /* Center inputs horizontally */
     padding: 0 15px; /* Increased padding for better alignment */
-}
-
-.half-section input {
-    max-width: 70%; /* Slightly wider for usability */
 }
 
 /* Modal Styling */
@@ -518,3 +513,4 @@ label {
         width: 100%;
     }
 }
+
