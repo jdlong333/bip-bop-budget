@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bip Bop Budget</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Nunito:wght@400;700&family=Poppins:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header">
+        <h1 class="app-title">Bip Bop Budget</h1>
+    </header>
+    <div class="controls">
+        <div class="action-buttons">
+            <button aria-label="Save current budget data">Save</button>
+            <button aria-label="Clear all budget data for this month">Clear</button>
+            <button id="ytdButton" class="nav-button" aria-label="Toggle Year to Date Summary">YTD Summary</button>
+        </div>
+        <div class="navigation-buttons">
+            <button id="yearButton" class="nav-button" aria-label="Select year">Year: <span id="selectedYear">2025</span></button>
+            <button id="monthButton" class="nav-button" aria-label="Select month">Month: <span id="selectedMonth">February</span></button>
+            <button id="importBillsButton" class="nav-button" onclick="showImportBillsPopup()" aria-label="Import bills from previous months">Import Bills</button>
+        </div>
+    </div>
+    <div class="container" id="mainPage">
+        <!-- Left Column (All Sections - 1/3 Screen) -->
+        <div class="left-column">
+            <section class="income-section card">
+                <h2 class="section-heading">Your Income</h2>
+                <div class="input-group">
+                    <label for="paycheck1">Paycheck 1 (Weeks 1-2):</label>
+                    <input type="text" id="paycheck1" placeholder="Enter amount" onchange="updateIncome()" onkeypress="formatCurrency(event, this)" aria-label="Enter amount for Paycheck 1 (Weeks 1-2)">
+                </div>
+                <div class="input-group">
+                    <label for="paycheck2">Paycheck 2 (Weeks 3-4):</label>
+                    <input type="text" id="paycheck2" placeholder="Enter amount" onchange="updateIncome()" onkeypress="formatCurrency(event, this)" aria-label="Enter amount for Paycheck 2 (Weeks 3-4)">
+                </div>
+            </section>
+
+            <section class="bill-section card">
+                <h2 class="section-heading">Your Bills</h2>
+                <div class="input-group">
+                    <input type="text" id="billName" placeholder="Bill Name (e.g., Rent)" aria-label="Enter bill name">
+                    <input type="text" id="billAmount" placeholder="Amount" onkeypress="addBillOnEnter(event)" aria-label="Enter bill amount">
+                    <button class="add-bill-button" onclick="addBill()" aria-label="Add new bill">
+                        <span class="plus-icon">+</span>
+                    </button>
+                </div>
+                <ul id="billList" role="list" aria-label="List of bills"></ul>
+                <button id="quickExpense" class="quick-add-expense" onclick="showQuickExpensePopup()" aria-label="Add quick expense">Quick Expense</button>
+                <ul id="expenseList" role="list" aria-label="List of quick expenses"></ul>
+                <p>Total Monthly Bills: $<span id="totalBills">0</span></p>
+                <p>Per Paycheck: $<span id="halfBills">0</span></p>
+            </section>
+
+            <div class="investing-savings-container">
+                <section class="investing-section card half-section">
+                    <h2 class="section-heading">Your Investments</h2>
+                    <div class="input-group">
+                        <label for="invested1">(Weeks 1-2):</label>
+                        <input type="text" id="invested1" placeholder="Enter amount" onchange="updateInvesting()" onkeypress="formatCurrency(event, this)" aria-label="Enter investment amount for Weeks 1-2">
+                    </div>
+                    <div class="input-group">
+                        <label for="invested2">(Weeks 3-4):</label>
+                        <input type="text" id="invested2" placeholder="Enter amount" onchange="updateInvesting()" onkeypress="formatCurrency(event, this)" aria-label="Enter investment amount for Weeks 3-4">
+                    </div>
+                </section>
+
+                <section class="savings-section card half-section">
+                    <h2 class="section-heading">Your Savings</h2>
+                    <div class="input-group">
+                        <label for="savings1">(Weeks 1-2):</label>
+                        <input type="text" id="savings1" placeholder="Enter amount" onchange="updateSavings()" onkeypress="formatCurrency(event, this)" aria-label="Enter savings amount for Weeks 1-2">
+                    </div>
+                    <div class="input-group">
+                        <label for="savings2">(Weeks 3-4):</label>
+                        <input type="text" id="savings2" placeholder="Enter amount" onchange="updateSavings()" onkeypress="formatCurrency(event, this)" aria-label="Enter savings amount for Weeks 3-4">
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Right Column (Summaries - 2/3 Screen) -->
+        <div class="right-column">
+            <section class="summary-section card">
+                <h2 class="section-heading">Your Bi-weekly Summary</h2>
+                <div class="bi-weekly-columns">
+                    <div class="bi-weekly-column">
+                        <h3 class="column-heading">Paycheck Cycle 1 (Weeks 1-2):</h3>
+                        <p>Income: <span id="biWeeklyIncome1"></span><span id="incomePercent1" class="percentage"></span></p>
+                        <p>Bills: <span id="biWeeklyBills1"></span><span id="billsPercent1" class="percentage"></span></p>
+                        <p>Invested: <span id="biWeeklyInvested1"></span><span id="investedPercent1" class="percentage"></span></p>
+                        <p>Saved: <span id="biWeeklySavings1"></span><span id="savingsPercent1" class="percentage"></span></p>
+                        <p>Net: <span id="netCycle1"></span><span id="netPercent1" class="percentage"></span></p>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="bi-weekly-column">
+                        <h3 class="column-heading">Paycheck Cycle 2 (Weeks 3-4):</h3>
+                        <p>Income: <span id="biWeeklyIncome2"></span><span id="incomePercent2" class="percentage"></span></p>
+                        <p>Bills: <span id="biWeeklyBills2"></span><span id="billsPercent2" class="percentage"></span></p>
+                        <p>Invested: <span id="biWeeklyInvested2"></span><span id="investedPercent2" class="percentage"></span></p>
+                        <p>Saved: <span id="biWeeklySavings2"></span><span id="savingsPercent2" class="percentage"></span></p>
+                        <p>Net: <span id="netCycle2"></span><span id="netPercent2" class="percentage"></span></p>
+                    </div>
+                </div>
+            </section>
+            <section id="ytdSummary" class="ytd-summary card" style="display: none;">
+                <h2 class="section-heading">Your Year to Date Summary for <span id="ytdYear"></span></h2>
+                <p>Total Income: <span id="ytdTotalIncome">0</span></p>
+                <p>Total Invested: <span id="ytdTotalInvested">0</span></p>
+                <p>Total Saved: <span id="ytdTotalSavings">0</span></p>
+            </section>
+        </div>
+    </div>
+    <div id="yearOptions" class="options-modal" style="display: none;">
+        <ul id="yearList" role="list" aria-label="Year selection options"></ul>
+    </div>
+    <div id="monthOptions" class="options-modal" style="display: none;">
+        <ul id="monthList" role="list" aria-label="Month selection options"></ul>
+    </div>
+    <div id="quickExpensePopup" class="expense-popup" style="display: none;" role="dialog" aria-label="Quick Expense Popup">
+        <h3>Quick Expense</h3>
+        <div class="input-group">
+            <label for="expenseName">Extra Expense:</label>
+            <input type="text" id="expenseName" placeholder="Expense Name" aria-label="Enter expense name">
+        </div>
+        <div class="input-group">
+            <label for="expenseAmount">Expense Amount:</label>
+            <input type="text" id="expenseAmount" placeholder="Amount ($)" onkeypress="formatCurrency(event, this)" aria-label="Enter expense amount">
+        </div>
+        <div class="input-group">
+            <label for="expenseApply">Apply To:</label>
+            <select id="expenseApply" aria-label="Select how to apply the expense">
+                <option value="split">Split Bill</option>
+                <option value="paycheck1">Paycheck 1</option>
+                <option value="paycheck2">Paycheck 2</option>
+            </select>
+        </div>
+        <button onclick="addQuickExpense()" aria-label="Submit quick expense">Submit</button>
+        <button onclick="hideQuickExpensePopup()" aria-label="Cancel quick expense">Cancel</button>
+    </div>
+    <div id="importBillsPopup" class="expense-popup" style="display: none;" role="dialog" aria-label="Import Bills Popup">
+        <h3>Import Bills</h3>
+        <div class="input-group">
+            <label for="importMonth">Month:</label>
+            <select id="importMonth" aria-label="Select month to import bills from">
+                <option value="january">January</option>
+                <option value="february">February</option>
+                <option value="march">March</option>
+                <option value="april">April</option>
+                <option value="may">May</option>
+                <option value="june">June</option>
+                <option value="july">July</option>
+                <option value="august">August</option>
+                <option value="september">September</option>
+                <option value="october">October</option>
+                <option value="november">November</option>
+                <option value="december">December</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="importYear">Year:</label>
+            <input type="number" id="importYear" placeholder="YYYY" min="2025" max="2030" aria-label="Enter year to import bills from">
+        </div>
+        <button onclick="importSelectedBills()" aria-label="Import selected bills">Import</button>
+        <button onclick="hideImportBillsPopup()" aria-label="Cancel import">Cancel</button>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

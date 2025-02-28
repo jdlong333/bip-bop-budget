@@ -1,0 +1,520 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Roboto', sans-serif; /* Clean, modern sans-serif for body */
+    background-color: #404040; /* Warm gray for a calming, approachable base */
+    background-image: linear-gradient(135deg, #404040 0%, #2E8B57 100%), /* Gradient from warm gray to emerald green */
+                      url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSI2MCIgY3k9IjQwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjYwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSI4MCIgY3k9IjgwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjgwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48Y2lyY2xlIGN4PSI4MCIgY3k9IjIwIiByPSIyIiBmaWxsPSJyZ2JhKDIyNSwyMjMsMjIzLDAuMSkiLz48L3N2Zz4='); /* Subtle dot pattern in light gray */
+    background-size: 100% 100%, 50px 50px; /* Full gradient, smaller dots for subtlety */
+    background-position: 0 0, 0 0; /* Position both backgrounds */
+    background-repeat: no-repeat, repeat; /* Gradient doesn’t repeat, dots repeat */
+    background-blend-mode: overlay; /* Blend layers for subtle effect */
+    color: #FFFFFF; /* White primary text */
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    line-height: 1.6;
+}
+
+/* Typography */
+.app-header {
+    display: flex;
+    justify-content: center; /* Center the title alone */
+    margin-bottom: 25px; /* Increased spacing for elegance */
+}
+
+.app-title {
+    font-family: 'Poppins', 'Nunito', sans-serif; /* Playful yet legible title font */
+    color: #F5F5F5; /* Off-white for a softer, more refined look */
+    font-size: 36px; /* Larger for prominence */
+    font-weight: 700; /* Bolder for emphasis */
+    text-align: center;
+    margin-bottom: 0; /* No additional margin since it’s in header */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), /* Enhanced shadow for depth */
+                 0 0 5px rgba(245, 245, 245, 0.2); /* Subtle glow adjusted for new color */
+    letter-spacing: 2px; /* Increased spacing for a striking look */
+    animation: pulseTitle 3s ease-in-out infinite; /* Subtle animation for engagement */
+}
+
+/* Animation for title to make it more eye-catching */
+@keyframes pulseTitle {
+    0% { transform: scale(1); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 0 5px rgba(245, 245, 245, 0.2); }
+    50% { transform: scale(1.02); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 0 10px rgba(245, 245, 245, 0.3); }
+    100% { transform: scale(1); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 0 5px rgba(245, 245, 245, 0.2); }
+}
+
+.section-heading, .column-heading {
+    font-family: 'Inter', 'Roboto', sans-serif; /* Clean sans-serif for headings */
+    color: #FFFFFF; /* White headings */
+    font-size: 18px;
+}
+
+.section-heading {
+    margin-bottom: 15px;
+}
+
+.column-heading {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Controls (Navigation and Action Buttons) */
+.controls {
+    display: flex;
+    justify-content: space-between; /* Space buttons evenly across the top */
+    align-items: center;
+    margin-bottom: 30px;
+    background: rgba(46, 139, 87, 0.8); /* Semi-transparent emerald green overlay for contrast */
+    padding: 10px 20px; /* Increased padding for a cleaner look */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+}
+
+.navigation-buttons, .action-buttons {
+    display: flex;
+    gap: 15px; /* Increased gap for better spacing */
+}
+
+.nav-button, .action-buttons button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #B0B0B0; /* Light gray border */
+    border-radius: 12px; /* Rounded corners */
+    background-color: #2E8B57; /* Emerald green buttons */
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+}
+
+.nav-button:hover, .action-buttons button:hover {
+    background-color: #1F7044; /* Darker emerald green on hover */
+    transform: scale(1.02); /* Slightly more noticeable scale-up on hover */
+    opacity: 1.1; /* 10% opacity increase */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for engagement */
+}
+
+/* Main Container (Card-Based Layout) */
+.container {
+    display: flex;
+    gap: 25px; /* Slightly increased for a more inviting layout */
+    margin-bottom: 20px;
+}
+
+.left-column, .right-column {
+    flex: 1;
+}
+
+.left-column {
+    width: 33.33%;
+}
+
+.right-column {
+    width: 66.67%;
+}
+
+/* Card Styling for Sections */
+.card {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: rgba(64, 64, 64, 0.9); /* Slightly lighter warm gray for cards, matching background */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+    border: 1px solid #B0B0B0; /* Light gray border */
+    transition: transform 0.2s ease, box-shadow 0.3s ease; /* Animation for hover */
+}
+
+.card:hover {
+    transform: translateY(-3px); /* Slight lift on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for engagement */
+}
+
+/* YTD Summary */
+.ytd-summary {
+    display: none;
+    margin-top: 20px;
+}
+
+.ytd-summary p {
+    font-size: 16px;
+    color: #B0B0B0; /* Light gray for secondary text */
+    margin: 5px 0;
+}
+
+/* Input Groups */
+.input-group {
+    display: flex;
+    gap: 15px; /* Increased gap for a friendlier, less cramped look */
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: nowrap; /* Prevent wrapping to keep inputs contained */
+}
+
+.input-group label {
+    flex: 0 0 auto; /* Prevent labels from shrinking */
+    font-weight: bold;
+}
+
+/* General Input Styling */
+input, select, button {
+    padding: 10px 15px; /* Slightly larger padding for a friendlier touch */
+    border: 1px solid #B0B0B0; /* Light gray border */
+    border-radius: 12px; /* Rounded corners */
+    background-color: #FFFFFF;
+    color: #0D0D0D;
+    font-size: 16px;
+    font-family: 'Inter', 'Roboto', sans-serif;
+    flex: 1; /* Allow inputs to grow/shrink */
+    max-width: 100%; /* Ensure inputs don’t exceed container */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+    transition: border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #2E8B57; /* Emerald green focus */
+    transform: scale(1.02); /* Slightly more noticeable scale-up on focus */
+    box-shadow: 0 4px 8px rgba(46, 139, 87, 0.3); /* Enhanced shadow on focus for engagement */
+}
+
+input::placeholder, select::placeholder {
+    color: #B0B0B0; /* Light gray for placeholders */
+    font-style: italic; /* Subtle italic for placeholders to entice input */
+}
+
+/* Income Section Specific Styling */
+.income-section .input-group {
+    justify-content: space-between; /* Evenly space label and input */
+}
+
+.income-section input {
+    width: 180px; /* Slightly wider for better usability */
+    max-width: 180px;
+}
+
+/* Button Styling */
+button {
+    background-color: #2E8B57; /* Emerald green buttons */
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+}
+
+button:hover {
+    background-color: #1F7044; /* Darker emerald green */
+    transform: scale(1.02); /* Slightly more noticeable scale-up on hover */
+    opacity: 1.1; /* 10% opacity increase */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover for engagement */
+}
+
+/* Bill Items and Expenses */
+.bill-item, .expense-item {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Increased gap for a friendlier look */
+    margin-bottom: 12px; /* Slightly increased for better spacing */
+    color: #FFFFFF;
+}
+
+.bill-text, .expense-text {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.delete-btn {
+    background-color: #D4A017; /* Warm soft gold for delete */
+    color: #0D0D0D;
+    padding: 8px 14px; /* Slightly larger for consistency */
+    font-size: 14px;
+    border-radius: 12px; /* Rounded corners */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+}
+
+.delete-btn:hover {
+    background-color: #B78C0E; /* Darker soft gold */
+    transform: scale(1.02); /* Slight scale-up on hover */
+    box-shadow: 0 4px 8px rgba(212, 160, 23, 0.3); /* Enhanced shadow on hover */
+}
+
+/* Quick Add Expense Button */
+.quick-add-expense {
+    padding: 12px 20px; /* Slightly larger for prominence */
+    font-size: 16px;
+    border: none;
+    border-radius: 12px; /* Rounded corners */
+    background-color: #2E8B57; /* Emerald green */
+    color: #FFFFFF;
+    cursor: pointer;
+    margin-top: 20px; /* Maintain spacing above */
+    margin-bottom: 15px; /* Increased bottom margin for proportionality */
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+    display: block; /* Ensure button stays within card boundaries */
+    width: fit-content; /* Adjust width to content for a cleaner look */
+    margin-left: auto; /* Center-align horizontally within the card */
+    margin-right: auto; /* Center-align horizontally within the card */
+}
+
+.quick-add-expense:hover {
+    background-color: #1F7044; /* Darker emerald green */
+    transform: scale(1.02); /* Slightly more noticeable scale-up on hover */
+    opacity: 1.1; /* 10% opacity increase */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+/* Bi-Weekly Columns */
+.bi-weekly-columns {
+    display: flex;
+    gap: 25px; /* Increased for a more inviting layout */
+    justify-content: space-between;
+    padding: 15px; /* Slightly increased padding for readability */
+}
+
+.bi-weekly-column {
+    flex: 1;
+    padding: 15px;
+    background-color: rgba(64, 64, 64, 0.9); /* Slightly lighter warm gray for cards, matching background */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+    border: 1px solid #B0B0B0; /* Light gray border */
+}
+
+.bi-weekly-column p {
+    font-size: 16px;
+    color: #B0B0B0; /* Light gray for secondary text */
+    margin: 8px 0; /* Increased spacing for readability */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.percentage {
+    color: #D4A017; /* Warm soft gold for percentages */
+    font-size: 14px;
+    margin-left: 8px; /* Increased for better separation */
+}
+
+/* Separator */
+.separator {
+    width: 2px;
+    background-color: #B0B0B0; /* Light gray */
+    margin: 10px 0;
+}
+
+/* Investing/Savings Half Sections */
+.investing-savings-container {
+    display: flex;
+    gap: 25px; /* Increased for a more inviting layout */
+    margin-bottom: 25px; /* Increased for better spacing */
+    height: 220px; /* Slightly taller for better proportionality */
+}
+
+.half-section {
+    flex: 1;
+    padding: 20px; /* Increased padding for a friendlier look */
+    background-color: rgba(64, 64, 64, 0.9); /* Slightly lighter warm gray for cards, matching background */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+    border: 1px solid #B0B0B0; /* Light gray border */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Full height of container */
+    overflow: hidden; /* Prevent content from protruding */
+}
+
+.half-section .input-group {
+    justify-content: center; /* Center inputs horizontally */
+    padding: 0 15px; /* Increased padding for better alignment */
+}
+
+.half-section input {
+    max-width: 70%; /* Slightly wider for usability */
+}
+
+/* Modal Styling */
+.options-modal {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgba(64, 64, 64, 0.9); /* Slightly lighter warm gray for modals, matching background */
+    border: 1px solid #B0B0B0; /* Light gray border */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+    z-index: 1001;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    min-width: 120px;
+}
+
+.options-modal li {
+    padding: 12px 18px; /* Slightly larger for usability */
+    font-size: 16px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.options-modal li:hover {
+    background-color: #2E8B57; /* Emerald green on hover */
+    transform: scale(1.02); /* Slightly more noticeable scale-up on hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft shadow on hover */
+}
+
+/* Expense Popup and Import Bills Popup */
+.expense-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(64, 64, 64, 0.9); /* Slightly lighter warm gray for popups, matching background */
+    padding: 25px; /* Increased padding for a friendlier look */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+    z-index: 1002;
+    border: 1px solid #B0B0B0; /* Light gray border */
+    width: 340px; /* Slightly wider for better usability */
+}
+
+.expense-popup h3 {
+    font-size: 20px; /* Slightly larger for emphasis */
+    color: #2E8B57; /* Emerald green for headings */
+    margin-bottom: 20px; /* Increased for better spacing */
+    text-align: center;
+}
+
+.expense-popup .input-group {
+    margin-bottom: 20px; /* Increased for better spacing */
+    flex-direction: column; /* Stack inputs vertically in popup */
+    align-items: flex-start; /* Align to left */
+}
+
+.expense-popup .input-group label {
+    margin-bottom: 8px; /* Increased for better readability */
+    font-weight: bold;
+    color: #FFFFFF; /* White labels */
+}
+
+.expense-popup .input-group input,
+.expense-popup .input-group select {
+    width: 100%; /* Full width in popup */
+    max-width: none; /* Override max-width for popup */
+    padding: 12px 15px; /* Larger padding for usability */
+}
+
+.expense-popup button {
+    margin-top: 15px; /* Increased for better spacing */
+    margin-right: 10px;
+    padding: 12px 20px; /* Larger for prominence */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+}
+
+.expense-popup button:hover {
+    background-color: #1F7044; /* Darker emerald green */
+    transform: scale(1.02); /* Slightly more noticeable scale-up on hover */
+    opacity: 1.1; /* 10% opacity increase */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+/* Add Bill Button */
+.add-bill-button {
+    width: 40px; /* Circular button size */
+    height: 40px; /* Circular button size */
+    border-radius: 20px; /* Half of width/height for circular shape */
+    background-color: #2E8B57; /* Emerald green */
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft drop shadow */
+}
+
+.add-bill-button:hover {
+    background-color: #1F7044; /* Darker emerald green */
+    transform: scale(1.02); /* Slightly more noticeable scale-up on hover */
+    opacity: 1.1; /* 10% opacity increase */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+.plus-icon {
+    line-height: 1; /* Ensure plus sign aligns properly */
+}
+
+/* Bill Section Input Adjustments */
+.bill-section .input-group input {
+    max-width: 45%; /* Adjust input widths to fit plus button within the section */
+}
+
+/* Specific styling for billAmount to remove spinner arrows */
+#billAmount {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    appearance: none;
+}
+
+/* Labels */
+label {
+    color: #FFFFFF; /* White labels */
+    font-weight: bold;
+}
+
+/* Subtle Animation for Engagement (Optional, can be removed if too flashy) */
+.card, .quick-add-expense, .nav-button, .action-buttons button {
+    animation: fadeInSlide 0.8s ease-out;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .left-column, .right-column {
+        width: 100%;
+    }
+    .bi-weekly-columns {
+        flex-direction: column;
+    }
+    .separator {
+        display: none;
+    }
+    .controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .navigation-buttons, .action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    .nav-button, .action-buttons button {
+        width: 100%;
+    }
+}
